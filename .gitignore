@@ -1,0 +1,23 @@
+# Python
+___pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# VS Code
+.vscode/
+
+# Sys files
+.DS_Store
+Thumbs.db
+
+# Cache
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Logs
+*.log
