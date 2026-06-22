@@ -5,7 +5,7 @@ This project compares two approaches for finding two link-disjoint paths in a ne
 * a naive sequential approach based on Dijkstra's algorithm,
 * Suurballe's algorithm.
 
-The project was prepared for the **Niezawodność systemów sieciowych** course and focuses on evaluating the efficiency of both algorithms for `k = 2`, which means one primary path and one backup path.
+The project focuses on evaluating the efficiency of both algorithms for `k = 2`, which means one primary path and one backup path.
 
 ## Project goal
 
@@ -76,6 +76,12 @@ Activate it on Windows:
 
 ```bash
 .venv\Scripts\activate
+```
+
+Activate it on Linux:
+
+```bash
+source .venv/bin/activate
 ```
 
 Install dependencies:
@@ -184,7 +190,6 @@ In two cases, Suurballe found a shorter total pair of link-disjoint paths:
 ## Generated figures
 
 ![Average path lengths](results/figures/average_lengths.png)
-
 
 ![Request rejection ratio](results/figures/rejection_ratio.png)
 
