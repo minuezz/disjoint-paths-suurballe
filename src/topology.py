@@ -8,9 +8,6 @@ import matplotlib.pyplot as plt
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_TOPOLOGY_PATH = PROJECT_ROOT / "data" / "topology_c4_edges.csv"
 
-
-# Approximate positions based on the provided topology image.
-# They are used only for visualization.
 C4_POSITIONS = {
     1: (8.0, 7.5),
     2: (4.6, 4.7),
@@ -32,15 +29,8 @@ C4_POSITIONS = {
 
 
 def load_c4_topology(csv_path: Path = DEFAULT_TOPOLOGY_PATH) -> nx.Graph:
-    """
-    Loads the C4 network topology from a CSV file.
-
-    The graph is undirected. Each edge has weight=1, because in this project
-    path length is interpreted as the number of links.
-    """
     graph = nx.Graph()
 
-    # Ensure that all 16 nodes exist, even if some node has no edge by mistake.
     graph.add_nodes_from(range(1, 17))
 
     with open(csv_path, mode="r", encoding="utf-8") as file:
@@ -55,9 +45,6 @@ def load_c4_topology(csv_path: Path = DEFAULT_TOPOLOGY_PATH) -> nx.Graph:
 
 
 def print_topology_info(graph: nx.Graph) -> None:
-    """
-    Prints basic information about the topology.
-    """
     print("C4 topology information")
     print("-----------------------")
     print(f"Number of nodes: {graph.number_of_nodes()}")
@@ -74,9 +61,6 @@ def draw_topology(
     output_path: Path | None = None,
     show: bool = True,
 ) -> None:
-    """
-    Draws the topology using approximate positions.
-    """
     plt.figure(figsize=(10, 8))
 
     nx.draw_networkx_nodes(
