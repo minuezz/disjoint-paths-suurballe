@@ -1,0 +1,2 @@
+algorithm,total_requests,accepted_requests,rejected_requests,rejection_ratio,average_primary_length,average_backup_length,average_total_length
+naive,120,120,0,0.0,2.025,2.8583333333333334,4.883333333333334
