@@ -5,6 +5,7 @@ import pandas as pd
 
 from topology import load_c4_topology
 from naive import find_naive_disjoint_paths
+from suurballe import find_suurballe_disjoint_paths
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 RESULTS_DIR = PROJECT_ROOT / "results"
@@ -18,14 +19,17 @@ def path_to_string(path: list[int] | None) -> str:
     
     return "-".join(str(node) for node in path)
 
-def run_naive_experiments() -> list[dict]:
+def run_algorithm_for_all_pairs(
+    algorithm_name: str,
+    algorithm_function,
+) -> list[dict]:
     graph = load_c4_topology()
     nodes = sorted(graph.nodes())
 
     results = []
 
     for source, target in combinations(nodes, 2):
-        result = find_naive_disjoint_paths(graph, source, target)
+        result = algorithm_function(graph, source, target)
         
         primary_length = result["primary_length"]
         backup_length = result["backup_length"]
@@ -37,7 +41,7 @@ def run_naive_experiments() -> list[dict]:
 
         results.append(
             {
-                "algorithm": "naive",
+                "algorithm": algorithm_name,
                 "source": source,
                 "target": target,
                 "status": result["status"],
@@ -51,6 +55,24 @@ def run_naive_experiments() -> list[dict]:
             }
         )
         
+    return results
+
+def run_all_experiments() -> list[dict]:
+    results = []
+
+    results.extend(
+        run_algorithm_for_all_pairs(
+            algorithm_name="naive",
+            algorithm_function=find_naive_disjoint_paths,
+        )
+    )
+
+    results.extend(run_algorithm_for_all_pairs(
+        algorithm_name="suurballe",
+        algorithm_function=find_suurballe_disjoint_paths,
+        )
+    )
+
     return results
 
 def calculate_summary(results: list[dict]) -> pd.DataFrame:
@@ -91,7 +113,7 @@ def save_results(results: list[dict], summary_df: pd.DataFrame) -> None:
     summary_df.to_csv(SUMMARY_RESULTS_PATH, index=False)
 
 def main() -> None:
-    results = run_naive_experiments()
+    results = run_all_experiments()
     summary_df = calculate_summary(results)
 
     save_results(results, summary_df)
